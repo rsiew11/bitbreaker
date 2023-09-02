@@ -4,8 +4,8 @@ const minRam = 8192;
 const hackServers = 1;
 const growThreadCount = 100;
 const hackThreadCount = 50;
-const sleepTime = 1000;
-const growToHackThresh = 0.75;
+const sleepTime = 700;
+const growToHackThresh = 0.60;
 const hackToGrowThresh = 0.40;
 
 const hackFile = 'scripts/hacker.js';
@@ -90,12 +90,12 @@ async function findTarget(ns, reverse) {
 /** @param {NS} ns */
 async function assignGrowers(ns) {
     for (let i=hackServers; i<25; i++) {
-        let target = await findTarget(ns, false)
+        let target = await findTarget(ns, false);
         let s = serverName(i);
         await initServer(ns, s);
         // if this target doenst need growing, we just turn this script call into a hack
         if (await fill(ns, target) > growToHackThresh) { 
-            startScript(ns, s, await findTarget(ns, true), growFile, hackThreadCount);
+            startScript(ns, s, await findTarget(ns, true), hackFile, hackThreadCount);
         } else {
             startScript(ns, s, target, growFile, growThreadCount);
         }
