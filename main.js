@@ -140,6 +140,8 @@ async function connectServers(ns, servers) {
                 ns.relaysmtp(server);
                 ns.httpworm(server);
                 ns.sqlinject(server);
+            } catch {}
+            try {
                 ns.nuke(server);
                 newServers.push(server)
             } catch {}
